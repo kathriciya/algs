@@ -2,9 +2,9 @@
 // работает только для отсортированных данных
 //16 элементов - 4 максимальное кол-во итераций
 const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+let count = 0;
 
 function binarySearch(arr, item) {
-  let count = 0;
   let start = 0;
   let end = arr.length;
   let middle;
@@ -16,7 +16,7 @@ function binarySearch(arr, item) {
     if (arr[middle] === item) {
       found = true;
       position = middle;
-      return console.log(`искомое ${position}, кол-во итераций ${count}`);
+      return position;
     }
     if (item < arr[middle]) {
       end = middle - 1;
@@ -27,10 +27,18 @@ function binarySearch(arr, item) {
   return position;
 }
 
-binarySearch(array, 8);
+function recursiveBinarySearch(array, item, start, end) {
+  let middle = Math.floor((start + end) / 2);
+  count += 1;
+  if (item === array[middle]) {
+    return middle;
+  }
+  if (item < array[middle]) {
+    return recursiveBinarySearch(array, item, 0, middle - 1);
+  } else {
+    return recursiveBinarySearch(array, item, middle + 1, end);
+  }
+}
 
-binarySearch(array, 4);
-
-binarySearch(array, 5);
-
-binarySearch(array, 11);
+console.log(recursiveBinarySearch(array, 0, 0, array.length));
+console.log(count);
